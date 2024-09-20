@@ -1,1 +1,1 @@
-## Clase de Inteligencia Afrtificial
+## Clase de Inteligencia Afrtificial - modificado
