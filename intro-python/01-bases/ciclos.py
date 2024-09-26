@@ -1,4 +1,4 @@
-rango = range(1,10, 2) # que va desde el 1 hasta el 10, sin incluir el 10
+rango = range(1,10) # que va desde el 1 hasta el 10, sin incluir el 10
 
 for valor in rango:
     print(valor)
