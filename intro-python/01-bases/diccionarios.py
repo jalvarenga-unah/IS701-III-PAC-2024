@@ -29,8 +29,8 @@ print(persona['nombre'])
 print(persona.get('edad'))
 
 
-print(persona.keys())
-print(persona.items())
+print(persona.keys()) # un listado con las claves del diccioanrio
+print(persona.items()) # un listado de tuplas
 
 for key in persona2:
     print(persona2[key])

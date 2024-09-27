@@ -19,14 +19,6 @@ if 'h' in nombre:
 
 estadoCivil = 'soltero'
 
-dictEstadoCivil = {
-    'soltero': 'Aproveche la vida hermano',
-    'casado': 'Felicidades (cof cof) :$',
-    'divorciado': 'A seguir adelante'
-}
-
-print(dictEstadoCivil[estadoCivil])
-
 # nuevo switch case
 match estadoCivil:
     case 'soltero':
@@ -35,3 +27,12 @@ match estadoCivil:
         print('Felicidades (cof cof) :$')
     case 'divorciado':
         print('A seguir adelante')
+
+
+dictEstadoCivil = {
+    'soltero': 'Aproveche la vida hermano',
+    'casado': 'Felicidades (cof cof) :$',
+    'divorciado': 'A seguir adelante'
+}
+
+print(dictEstadoCivil[estadoCivil])
