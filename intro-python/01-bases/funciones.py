@@ -5,15 +5,11 @@ def saludo():
     print('Este mensaje, tambien fué enviado desde la función')
     return 3
 
+def sumaNumeros(*nums):
+    return sum(nums)
 
-print('Este mensaje, fué enviado desde fuera la función')
-
-saludo()  # ejecutar la función
-
-otraFuncion = saludo  # obteniendo la referencia en memoria de "saludo"
-
-print(otraFuncion())
-
+def crearDict(**params):
+    print(params)
 
 def suma(n1, n2):
     return n1 + n2  # es la ultima instrucción dentro de la función
@@ -27,22 +23,24 @@ def division(n1, n2):
 def saludar(nombre='Mundo'):
     print(f"Hola {nombre}")
 
+if __name__ == "__main__":
 
-print(suma(n1=2, n2=3))
-print(division(n2=2, n1=0))
-saludar(nombre="Enrique")
+    print('Este mensaje, fué enviado desde fuera la función')
 
-print(max([1, 4, 5, 8, 90]))
-print(max(1, 4, 444, 5, 8, 90))
-print(max(['a', 'b', 'c']))
+    saludo()  # ejecutar la función
 
+    otraFuncion = saludo  # obteniendo la referencia en memoria de "saludo"
 
-def sumaNumeros(*nums):
-    return sum(nums)
+    print(otraFuncion())
 
-def crearDict(**params):
-    print(params)
+    print(suma(n1=2, n2=3))
+    print(division(n2=2, n1=0))
+    saludar(nombre="Enrique")
 
-print(sumaNumeros(1, 5, 4, 23, 6))
+    print(max([1, 4, 5, 8, 90]))
+    print(max(1, 4, 444, 5, 8, 90))
+    print(max(['a', 'b', 'c']))
 
-crearDict(a=3, b=4, c=5, d=6)
+    print(sumaNumeros(1, 5, 4, 23, 6))
+
+    crearDict(a=3, b=4, c=5, d=6)
