@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Formulario de Pasajero del Titanic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: grid;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Formulario de Pasajero del Titanic</h1>
+        <form id="titanicForm">
+            <label for="pclass">Clase de Pasajero (Pclass):</label>
+            <select id="pclass" required>
+                <option value="1">1 - Primera Clase</option>
+                <option value="2">2 - Segunda Clase</option>
+                <option value="3">3 - Tercera Clase</option>
+            </select>
+
+            <label for="age">Edad:</label>
+            <input type="number" id="age" min="0" max="120" required>
+
+            <label for="sibsp">Número de hermanos/cónyuges a bordo (SibSp):</label>
+            <input type="number" id="sibsp" min="0" required>
+
+            <label for="parch">Número de padres/hijos a bordo (Parch):</label>
+            <input type="number" id="parch" min="0" required>
+
+            <label for="fare">Tarifa del pasaje (Fare):</label>
+            <input type="number" id="fare" min="0" step="0.01" required>
+
+            <label for="gender">Género:</label>
+            <select id="gender" required>
+                <option value="male">Masculino</option>
+                <option value="female">Femenino</option>
+            </select>
+
+            <label for="embarked">Puerto de Embarque:</label>
+            <select id="embarked" required>
+                <option value="C">Cherbourg</option>
+                <option value="Q">Queenstown</option>
+                <option value="S">Southampton</option>
+            </select>
+
+            <button type="submit">Enviar</button>
+        </form>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+
+        document.getElementById('titanicForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const pclass = document.getElementById('pclass').value;
+            const age = document.getElementById('age').value;
+            const sibsp = document.getElementById('sibsp').value;
+            const parch = document.getElementById('parch').value;
+            const fare = document.getElementById('fare').value;
+            const isMale = document.getElementById('gender').value === 'male';
+            const embarked = document.getElementById('embarked').value;
+
+            const formData = {
+                Pclass: parseInt(pclass),
+                Age: parseFloat(age),
+                SibSp: parseInt(sibsp),
+                Parch: parseInt(parch),
+                Fare: parseFloat(fare),
+                male: isMale ? 1 : 0,
+                Q: embarked === 'Q' ? 1 : 0,
+                S: embarked === 'S' ? 1 : 0
+            };
+
+            console.log('Datos del formulario:', formData);
+
+            // Aquí puedes agregar la lógica para enviar estos datos a un servidor
+            // o realizar el cálculo de supervivencia si tienes un modelo en el frontend
+
+            document.getElementById('resultado').textContent = 'Formulario enviado con éxito. Revisa la consola para ver los datos.';
+        });
+    </script>
+</body>
+
+</html>
