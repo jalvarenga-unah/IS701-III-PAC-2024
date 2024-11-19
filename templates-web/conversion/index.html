@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conversor de Temperatura</title>
-    
-
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"> </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,10 +68,57 @@
 
     <script>
 
-        function convertir() {
-            const celsius = document.getElementById('celsius').value;
-            const fahrenheit = (celsius * 9 / 5) + 32;
-            document.getElementById('resultado').innerText = `Fahrenheit: ${fahrenheit}°`;
+        async function entrenamiento() {
+
+            // tener los datos de entrenamiento
+            const c = [-40, -10, 0, 30, 40, 50, 60, 70, 80, 90, 100, 80, 110, 120, 130, 140]
+            const f = [-40.0, 14.0, 32.0, 86.0, 104.0, 122.0, 140.0, 158.0, 176.0, 194.0, 212.0, 176.0, 230.0, 248.0, 266.0, 284.0]
+
+            //Normalización de los datos
+            const tensor_c = tf.tensor(c).div(100) // X
+            const tensor_f = tf.tensor(f).div(100) // y
+
+            // crear el modelo
+            const modelo = tf.sequential()
+            // inputShape: [1] -> es el numero de caracteristicas que tiene el tensor de entrada
+            modelo.add(tf.layers.dense({ units: 10, inputShape: [1], activation: 'relu' })) // capa oculta
+            modelo.add(tf.layers.dense({ units: 1 }))  // capa de salida, debe tener la misma cantidad de unidades que espero en la prediccion
+
+            modelo.compile({ loss: 'meanSquaredError', optimizer: 'adam' }) // configurar el modelo
+
+            // entrenar el modelo
+            await modelo.fit(tensor_c, tensor_f, { epochs: 1000 }) // Promesa, es algo que toma tiempo
+
+            // hacer predicciones
+            const valor = tf.tensor2d([60], [1, 1]).div(100) // tensor de entrada
+            const resultado = modelo.predict(valor) //Promesa
+            const prediccion = resultado.dataSync()[0] * 100 // obtener el valor de la prediccion
+
+            await modelo.save('downloads://modelo-c-f') // guardar el modelo
+        }
+
+        //? solo se ejecuta 1 vez
+        // entrenamiento()
+
+
+        async function cargarModelo() {            
+            return await tf.loadLayersModel('./modelo-c-f.json')
+        }
+
+        async function convertir() {
+
+            const modelo = await cargarModelo()
+    
+
+            //obtenemos los valores de los inputs
+            const celsius = parseFloat(document.getElementById('celsius').value)
+
+            const valor = tf.tensor2d([celsius], [1, 1]).div(100) // tensor de entrada
+            const resultado = modelo.predict(valor) //Promesa
+            const prediccion = resultado.dataSync()[0] * 100 // obtener el valor de la prediccion
+
+            // const fahrenheit = (celsius * 9 / 5) + 32;
+            document.getElementById('resultado').innerText = `Fahrenheit: ${Math.floor(prediccion)}°`;
         }
 
     </script>
