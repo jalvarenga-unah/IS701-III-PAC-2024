@@ -116,6 +116,61 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"> </script>
 
     <script>
+
+        async function entrenarModelo() {
+
+            //1. Definir los tensores para entrenar mi modelo
+            const tensorX = tf.tensor2d(X_train)
+            const tensory = tf.tensor2d(y_train)
+
+
+            //2. crear instancia de mi modelo
+            const modelo = tf.sequential()
+
+            //3. Añadir capas a mi modelo
+
+            //capa de entrada
+            modelo.add(tf.layers.dense({
+                units: 10,
+                inputShape: [tensorX.shape[1]], // en función de las columnas de mi dataset
+                activation: 'sigmoid' // modelo de clasificación
+            }))
+
+            //capa de salida
+            modelo.add(tf.layers.dense({
+                units: 1
+            }))
+
+            //4. Compilar el modelo
+            modelo.compile({
+                loss: 'binaryCrossentropy',
+                optimizer: 'adam',
+                metrics: ['accuracy']
+            })
+
+            console.log('entrenando modelo...')
+            //5. Entrenar el modelo
+            await modelo.fit(tensorX, tensory, {
+                epochs: 100,
+                verbose:0
+            })
+
+            console.log('Modelo entrenado :D')
+
+            //6. hacer una predicción
+            // const tensor_test = tf.tensor2d([[ 1, 38, 1, 0, 71.2833, 0, 0, 0 ]]) 
+            // const prediccion = modelo.predict( tensor_test, [1, tensor_test.shape[1] ] )
+            // const resultado = prediccion.dataSync()[0]
+            // console.log('Resultado de la predicción:', resultado)
+
+            //7. Guardar el modelo
+
+            modelo.save('downloads://modelo-titanic')
+
+        }
+
+        // entrenarModelo()
+
         document.getElementById('titanicForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -138,7 +193,13 @@
                 S: embarked === 'S' ? 1 : 0
             };
 
-            console.log('Datos del formulario:', formData);
+            const data = []
+
+            for (let key in formData) {
+                data.push(formData[key])
+            }
+
+            const tensor_test = tf.tensor2d([data])
 
             // Aquí puedes agregar la lógica para enviar estos datos a un servidor
             // o realizar el cálculo de supervivencia si tienes un modelo en el frontend
