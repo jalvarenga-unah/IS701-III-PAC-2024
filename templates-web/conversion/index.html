@@ -68,6 +68,9 @@
 
     <script>
 
+        // Promesas
+
+
         async function entrenamiento() {
 
             // tener los datos de entrenamiento
@@ -94,8 +97,10 @@
             const resultado = modelo.predict(valor) //Promesa
             const prediccion = resultado.dataSync()[0] * 100 // obtener el valor de la prediccion
 
-            await modelo.save('downloads://modelo-c-f') // guardar el modelo
+            // await modelo.save('downloads://modelo-c-f') // guardar el modelo
         }
+
+
 
         //? solo se ejecuta 1 vez
         // entrenamiento()
